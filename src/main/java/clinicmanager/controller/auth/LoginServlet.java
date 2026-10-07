@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
             if (loggedUser.getRole() != null) {
                 switch (loggedUser.getRole()) {
                     case PATIENT:
-                        response.sendRedirect(request.getContextPath() + "/patient/dashboard");
+                        response.sendRedirect(request.getContextPath() + "/patient/profile");
                         return;
                     case DOCTOR:
                         response.sendRedirect(request.getContextPath() + "/doctor/dashboard");
@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
                 case PATIENT ->
                         response.sendRedirect(
                                 request.getContextPath()
-                                        + "/patient/dashboard"
+                                        + "/patient/profile"
                         );
 
                 case DOCTOR ->

@@ -27,7 +27,7 @@ public class PatientDTO {
     private String phone;
 
     @NotBlank(message = "Le mot de passe est obligatoire")
-    @Size(min = 8, message = "8 caractères minimum")
+    @Size(min = 6, message = "6 caractères minimum")
     private String password;
 
     @NotBlank(message = "Le CIN est obligatoire")

@@ -20,7 +20,7 @@ public class UserServlet extends HttpServlet {
     ) throws IOException {
 
         response.getWriter().println(
-                userService.getMessage()
+               "coici une message de test!"
         );
     }
 }

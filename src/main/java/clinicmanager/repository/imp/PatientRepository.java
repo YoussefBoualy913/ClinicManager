@@ -8,6 +8,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.Optional;
+
 @ApplicationScoped
 public class PatientRepository implements IPatientRepository {
 
@@ -23,6 +25,19 @@ public class PatientRepository implements IPatientRepository {
 
         return count > 0;
     }
+
+    @Override
+
+        public Optional<Patient> findByEmail(String email) {
+        EntityManager em = JPAConfig.createEntityManager();
+            return em.createQuery(
+                            "SELECT p FROM Patient p WHERE p.email = :email",
+                            Patient.class
+                    )
+                    .setParameter("email", email)
+                    .getResultStream()
+                    .findFirst();
+        }
 
     @Override
     public boolean existsByCin(String cin) {
@@ -60,4 +75,26 @@ public class PatientRepository implements IPatientRepository {
                 throw e;
             }
         }
+
+    @Override
+    public void update(Patient patient) {
+        EntityManager em = JPAConfig.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            em.merge(patient);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw e;
+        }
     }
+}

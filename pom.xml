@@ -81,6 +81,7 @@
                 <version>10.0.0</version>
                 <scope>provided</scope>
             </dependency>
+
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>

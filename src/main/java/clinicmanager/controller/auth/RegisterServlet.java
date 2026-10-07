@@ -41,7 +41,6 @@ public class RegisterServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-
         String role = request.getParameter("role");
 
         if ("patient".equalsIgnoreCase(role)) {

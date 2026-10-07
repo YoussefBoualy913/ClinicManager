@@ -3,6 +3,7 @@ package clinicmanager.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(
@@ -95,5 +96,26 @@ public class Patient extends User {
 
     public void setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
+    }
+
+    public String getBirthDateFormatted() {
+        return birthDate != null
+                ? birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
+                : "";
+    }
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + getId() +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", phone='" + getPhone() + '\'' +
+                ", cin='" + cin + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender=" + gender +
+                ", address='" + address + '\'' +
+                ", bloodGroup=" + bloodGroup +
+                '}';
     }
 }
