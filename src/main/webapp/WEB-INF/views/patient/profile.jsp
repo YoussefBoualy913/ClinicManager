@@ -167,13 +167,18 @@
                             <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6"
                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"/>
                         </div>
-
+                        <c:if test="${not empty error}">
+                            <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                                ${error}
+                            </div>
+                        </c:if>
                         <div class="pt-2">
                             <button type="submit"
                                     class="px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors">
                                 Changer le mot de passe
                             </button>
                         </div>
+
                     </form>
                 </div>
 

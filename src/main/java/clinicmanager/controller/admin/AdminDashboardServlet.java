@@ -12,6 +12,8 @@ import java.io.IOException;
 public class AdminDashboardServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         request.getRequestDispatcher(
                 "/WEB-INF/views/admin/dashboard.jsp"
         ).forward(request, response);
