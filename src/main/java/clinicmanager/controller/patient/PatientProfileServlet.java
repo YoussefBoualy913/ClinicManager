@@ -2,9 +2,11 @@ package clinicmanager.controller.patient;
 
 import clinicmanager.exception.DateTimeParseException;
 import clinicmanager.model.Patient;
+import clinicmanager.model.Role;
 import clinicmanager.model.User;
 import clinicmanager.repository.IPatientRepository;
 import clinicmanager.service.PatientService;
+import clinicmanager.util.AuthUtils;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,14 +28,21 @@ public class PatientProfileServlet extends HttpServlet {
     private PatientService patientService;
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Optional<Patient> patient = patientRepository.findByEmail(user.getEmail());
-        session.setAttribute("patient", patient.get());
 
-        session.setAttribute(
+        User user = AuthUtils.requireRole(
+                request, response, Role.PATIENT
+        );
+
+        if (user == null) {
+            return;
+        }
+
+        Patient patient = (Patient) user;
+        request.setAttribute("patient", patient);
+
+        request.setAttribute(
                 "createdAtFormatted",
-                user.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                patient.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         );
         request.getRequestDispatcher(
                 "/WEB-INF/views/patient/profile.jsp"
@@ -46,12 +55,15 @@ public class PatientProfileServlet extends HttpServlet {
                 throws ServletException, IOException {
 
 
-            Patient patient = (Patient) request.getSession().getAttribute("patient");
+            User user = AuthUtils.requireRole(
+                    request, response, Role.PATIENT
+            );
 
-            if (patient == null) {
-                response.sendRedirect(request.getContextPath() + "/login");
+            if (user == null) {
                 return;
             }
+
+            Patient patient = (Patient) user;
 
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
