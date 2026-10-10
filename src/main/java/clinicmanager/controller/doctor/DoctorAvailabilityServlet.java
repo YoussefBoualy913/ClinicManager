@@ -25,6 +25,9 @@ public class DoctorAvailabilityServlet extends HttpServlet {
        );
 
        if (user == null) {
+           response.sendRedirect(
+                   request.getContextPath() + "/login"
+           );
            return;
        }
 
@@ -48,6 +51,9 @@ public class DoctorAvailabilityServlet extends HttpServlet {
             );
 
             if (user == null) {
+                response.sendRedirect(
+                        request.getContextPath() + "/login"
+                );
                 return;
             }
 

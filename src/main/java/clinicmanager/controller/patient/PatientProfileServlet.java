@@ -60,6 +60,9 @@ public class PatientProfileServlet extends HttpServlet {
             );
 
             if (user == null) {
+                response.sendRedirect(
+                        request.getContextPath() + "/login"
+                );
                 return;
             }
 

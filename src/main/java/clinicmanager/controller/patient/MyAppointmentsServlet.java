@@ -2,7 +2,10 @@ package clinicmanager.controller.patient;
 
 import clinicmanager.model.Appointment;
 import clinicmanager.model.Patient;
+import clinicmanager.model.Role;
+import clinicmanager.model.User;
 import clinicmanager.service.AppointmentService;
+import clinicmanager.util.AuthUtils;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,15 +24,18 @@ public class MyAppointmentsServlet extends HttpServlet {
     @Override
     public  void doGet(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
 
-        Patient patient =
-                (Patient) request.getSession().getAttribute("patient");
+        User user = AuthUtils.requireRole(
+                request, response, Role.PATIENT
+        );
 
-        if (patient == null) {
+        if (user == null) {
             response.sendRedirect(
                     request.getContextPath() + "/login"
             );
             return;
         }
+
+        Patient patient = (Patient) user;
 
         List<Appointment> appointments =
                 appointmentService.findByPatient(patient.getId());
