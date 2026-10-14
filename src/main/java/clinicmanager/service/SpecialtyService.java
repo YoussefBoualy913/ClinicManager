@@ -12,6 +12,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @ApplicationScoped
 public class SpecialtyService {
     @Inject
@@ -20,6 +23,9 @@ public class SpecialtyService {
 
     public  List<Specialty> findAll(){
       return  specialtyRepository.findAll();
+    }
+    public Optional<Specialty> findById(UUID specialtyId){
+        return specialtyRepository.findById(specialtyId);
     }
 
 }

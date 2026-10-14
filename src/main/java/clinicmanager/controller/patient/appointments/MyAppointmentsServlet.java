@@ -1,4 +1,4 @@
-package clinicmanager.controller.patient;
+package clinicmanager.controller.patient.appointments;
 
 import clinicmanager.model.Appointment;
 import clinicmanager.model.Patient;
@@ -42,7 +42,7 @@ public class MyAppointmentsServlet extends HttpServlet {
         request.setAttribute("appointments", appointments);
 
         request.getRequestDispatcher(
-                "/WEB-INF/views/patient/appointments.jsp"
+                "/WEB-INF/views/patient/appointments/appointments.jsp"
         ).forward(request, response);
     }
 

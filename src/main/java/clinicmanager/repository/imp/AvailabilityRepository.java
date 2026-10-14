@@ -2,10 +2,12 @@ package clinicmanager.repository.imp;
 
 import clinicmanager.config.JPAConfig;
 import clinicmanager.model.Availability;
+import clinicmanager.model.Doctor;
 import clinicmanager.repository.IAvailabilityRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.UUID;
 @ApplicationScoped
@@ -53,6 +55,27 @@ public class AvailabilityRepository implements IAvailabilityRepository {
             }
 
             throw e;
+
+        } finally {
+            em.close();
+        }
+    }
+    public List<Availability> findByDoctorAndDayOfWeek(
+            Doctor doctor,
+            DayOfWeek dayOfWeek
+    ) {
+        EntityManager em = JPAConfig.createEntityManager();
+
+        try {
+            return em.createQuery(
+                            "SELECT a FROM Availability a " +
+                                    "WHERE a.doctor = :doctor " +
+                                    "AND a.dayOfWeek = :dayOfWeek",
+                            Availability.class
+                    )
+                    .setParameter("doctor", doctor)
+                    .setParameter("dayOfWeek", dayOfWeek)
+                    .getResultList();
 
         } finally {
             em.close();
